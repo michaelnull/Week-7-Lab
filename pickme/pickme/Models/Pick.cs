@@ -58,6 +58,10 @@ namespace pickme.Models
             var imageArray = client.DownloadData(url);
             return ScaleImage(imageArray, 100, 100);
         }
+       
+
+
     }
-   
+
+
 }

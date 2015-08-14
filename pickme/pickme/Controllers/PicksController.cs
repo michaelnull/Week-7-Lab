@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using pickme.Models;
+using System.IO;
 
 namespace pickme.Controllers
 {
@@ -15,17 +16,22 @@ namespace pickme.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Picks
+        [Authorize]
         public ActionResult PickList(int? id)
         {
             if (id == null || id < 1)
             {
                 id = 1;
             }
-            int picksToSkip = Convert.ToInt32(id) * 12;
+            int picksToSkip = Convert.ToInt32(id - 1) * 12;
+
+            ViewBag.Page = id;
+
             return View(db.Picks.ToList().Skip(picksToSkip).Take(12).OrderByDescending(x => x.PostedOn));
         }
 
         // GET: Picks/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -41,6 +47,7 @@ namespace pickme.Controllers
         }
 
         // GET: Picks/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -51,20 +58,40 @@ namespace pickme.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PictureUrl,description,PostedOn,Image,Category")] Pick pick)
+        public ActionResult Create(PickUploadVM newPick)
         {
-            if (ModelState.IsValid)
+            ApplicationUser currentUser = new ApplicationUser();
+            if (User.Identity.Name == "")
             {
-                pick.PostedOn = DateTime.Now;
-                db.Picks.Add(pick);
-                db.SaveChanges();
-                return RedirectToAction("PickList");
+                currentUser = db.Users.FirstOrDefault(x => x.UserName == newPick.YourName);
+            }
+            else
+            {
+                currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
             }
 
-            return View(pick);
-        }
+            using (var ms = new MemoryStream())
+            {
+                newPick.File.InputStream.CopyTo(ms);
 
+                var pi = new Pick
+                {
+                    PostedBy = currentUser,
+                    Image = Pick.ScaleImage(ms.ToArray(), 50, 50),
+                    PostedOn = DateTime.Now,
+                    Description = newPick.Description,
+                    PictureUrl = newPick.Url
+                };
+
+                db.Picks.Add(pi);
+                db.SaveChanges();
+            }
+            return RedirectToAction("PickList");
+
+
+        }
         // GET: Picks/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,7 +103,19 @@ namespace pickme.Controllers
             {
                 return HttpNotFound();
             }
-            return View(pick);
+
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+            if (currentUser != pick.PostedBy)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EditVM changePick = new EditVM();
+            changePick.Id = pick.Id;
+            changePick.Description = pick.Description;
+            changePick.Url = pick.PictureUrl;
+            
+            return View(changePick);
         }
 
         // POST: Picks/Edit/5
@@ -84,18 +123,23 @@ namespace pickme.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PictureUrl,description,PostedOn,Image,Category")] Pick pick)
+        public ActionResult Edit(EditVM changePick)
         {
+            Pick pick = db.Picks.FirstOrDefault(x => x.Id == changePick.Id);
+            pick.Description = changePick.Description;
+            pick.PictureUrl = changePick.Url;
             if (ModelState.IsValid)
             {
+                
                 db.Entry(pick).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(pick);
+            return View(changePick);
         }
 
         // GET: Picks/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -106,6 +150,13 @@ namespace pickme.Controllers
             if (pick == null)
             {
                 return HttpNotFound();
+            }
+
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+            if (currentUser != pick.PostedBy)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View(pick);
         }
@@ -121,6 +172,20 @@ namespace pickme.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult GetImage(int id)
+        {
+
+            var dbRow = db.Picks.Find(id);
+            if (dbRow.Image == null)
+            {
+                Pick noImage = new Pick();
+                    noImage.Image = noImage.GetBytes("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTLna360D4lNuRMj_2nBHnO-vtIh9QhpDXJPnfadeaMQEPJbGNoLdSZ4A");
+                return File(noImage.Image, "image");
+            }
+            return File(dbRow.Image, "image");
+
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -129,5 +194,8 @@ namespace pickme.Controllers
             }
             base.Dispose(disposing);
         }
+        
+        
+
     }
 }

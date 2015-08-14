@@ -46,25 +46,26 @@ namespace pickme.Migrations
                 var userToInsert = new ApplicationUser { UserName = "tom@nobody.com" };
                 userManager.Create(userToInsert, "Abc123!@#");
             }
-            
-            ApplicationUser poster = context.Users.FirstOrDefault(x => x.UserName == "joe@nobody.com");
-            Pick a = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/6099217-lg.jpg", Description = "Sweet lagoon -Balos beach -Crete." , PostedBy = poster  };
+            if (!context.Picks.Any())
+            {
+                ApplicationUser poster = context.Users.FirstOrDefault(x => x.UserName == "joe@nobody.com");
+                Pick a = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/6099217-lg.jpg", Description = "Sweet lagoon -Balos beach -Crete.", PostedBy = poster };
 
-            poster = context.Users.FirstOrDefault(x => x.UserName == "fred@nobody.com");
-            Pick b = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/3659572-md.jpg", Description = "House on the Hill" , PostedBy = poster};
+                poster = context.Users.FirstOrDefault(x => x.UserName == "fred@nobody.com");
+                Pick b = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/3659572-md.jpg", Description = "House on the Hill", PostedBy = poster };
 
-            poster = context.Users.FirstOrDefault(x => x.UserName == "tom@nobody.com");
-            Pick c = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/6821374-md.jpg", Description = "Invasive TV", PostedBy = poster };
+                poster = context.Users.FirstOrDefault(x => x.UserName == "tom@nobody.com");
+                Pick c = new Pick { PostedOn = DateTime.Now, PictureUrl = "http://gallery.photo.net/photo/6821374-md.jpg", Description = "Invasive TV", PostedBy = poster };
 
-            a.Image = a.GetBytes(a.PictureUrl);
-            b.Image = b.GetBytes(b.PictureUrl);
-            c.Image = b.GetBytes(c.PictureUrl);
+                a.Image = a.GetBytes(a.PictureUrl);
+                b.Image = b.GetBytes(b.PictureUrl);
+                c.Image = b.GetBytes(c.PictureUrl);
 
-            
-            context.Picks.AddOrUpdate(a);
-            context.Picks.AddOrUpdate(b);
-            context.Picks.AddOrUpdate(c);
 
+                context.Picks.AddOrUpdate(a);
+                context.Picks.AddOrUpdate(b);
+                context.Picks.AddOrUpdate(c);
+            }
 
         }
     }

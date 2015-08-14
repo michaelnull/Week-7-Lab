@@ -15,7 +15,7 @@
             @Html.DisplayNameFor(model => model.PictureUrl)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.description)
+            @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PostedOn)
@@ -23,9 +23,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Image)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -35,17 +33,15 @@
             @Html.DisplayFor(modelItem => item.PictureUrl)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.description)
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PostedOn)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Image)
+            <img src='@Url.Action("GetImage", new { id = item.Id })' />
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
@@ -55,3 +51,5 @@
 }
 
 </table>
+@Html.ActionLink("Previous Page", "PickList", new { id = ViewBag.Page - 1 }) | 
+@Html.ActionLink("Next Page", "PickList", new { id = ViewBag.Page + 1 })

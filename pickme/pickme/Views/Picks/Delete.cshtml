@@ -20,11 +20,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.description)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.description)
+            @Html.DisplayFor(model => model.Description)
         </dd>
 
         <dt>
@@ -40,17 +40,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Image)
+            <img src='@Url.Action("GetImage", new {id = Model.Id })' />
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-
+      
     </dl>
 
     @using (Html.BeginForm()) {
@@ -58,7 +51,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "PickList")
         </div>
     }
 </div>
