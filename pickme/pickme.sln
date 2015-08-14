@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pickme", "pickme\pickme.csproj", "{325144AF-E118-46AE-A7B3-403183B1B951}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PublishScripts", "PublishScripts", "{D7E97419-797B-461C-9FDA-F11609E5207A}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\AzureVMPublishModule.psm1 = PublishScripts\AzureVMPublishModule.psm1
+		PublishScripts\Publish-WebApplicationVM.ps1 = PublishScripts\Publish-WebApplicationVM.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configurations", "Configurations", "{DF6953C1-C814-4A29-8A62-BAC22196E940}"
+	ProjectSection(SolutionItems) = preProject
+		PublishScripts\Configurations\pickme-WAWS-dev.json = PublishScripts\Configurations\pickme-WAWS-dev.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{325144AF-E118-46AE-A7B3-403183B1B951}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{325144AF-E118-46AE-A7B3-403183B1B951}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{325144AF-E118-46AE-A7B3-403183B1B951}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{325144AF-E118-46AE-A7B3-403183B1B951}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DF6953C1-C814-4A29-8A62-BAC22196E940} = {D7E97419-797B-461C-9FDA-F11609E5207A}
+	EndGlobalSection
+EndGlobal
