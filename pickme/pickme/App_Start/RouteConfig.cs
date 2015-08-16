@@ -14,6 +14,12 @@ namespace pickme
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+             name: "display",
+             url: "Picks/DisplayPicks/{page}",
+             defaults: new { controller = "Picks", action = "DisplayPicks", page = UrlParameter.Optional }
+         );
+
+            routes.MapRoute(
               name: "index",
               url: "{controller}/Index",
               defaults: new { controller = "Picks", action = "PickList"}

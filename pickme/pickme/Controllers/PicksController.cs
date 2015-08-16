@@ -26,8 +26,24 @@ namespace pickme.Controllers
             int picksToSkip = Convert.ToInt32(id - 1) * 12;
 
             ViewBag.Page = id;
-
+            db.Picks.Include(x => x.PostedBy);
             return View(db.Picks.ToList().Skip(picksToSkip).Take(12).OrderByDescending(x => x.PostedOn));
+        }
+        //move data about pictures into app.js for display on main webpage
+        [Authorize]
+        public ActionResult DisplayPicks(int? page)
+        {
+            if (page == null || page < 1)
+            {
+                page = 1;
+            }
+            int picksToSkip = Convert.ToInt32(page - 1) * 12;
+
+            ViewBag.Page = page;
+
+            return Json(db.Picks.ToList().Skip(picksToSkip).Take(12).OrderByDescending(x => x.PostedOn),
+                JsonRequestBehavior.AllowGet);
+
         }
 
         // GET: Picks/Details/5
@@ -185,7 +201,10 @@ namespace pickme.Controllers
             return File(dbRow.Image, "image");
 
         }
-
+        public ActionResult Main1()
+        {
+            return View("Main1");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

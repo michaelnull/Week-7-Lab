@@ -23,7 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Image)
         </th>
-       
+        <th>
+            @Html.DisplayNameFor(model => model.PostedBy)
+        </th>
         <th></th>
     </tr>
 
@@ -40,6 +42,9 @@
         </td>
         <td>
             <img src='@Url.Action("GetImage", new { id = item.Id })' />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostedBy)
         </td>
        
         <td>

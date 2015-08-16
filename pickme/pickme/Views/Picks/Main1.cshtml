@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Main1";
+}
+
+<h2>Main1</h2>
+<div ng-controller="DisplayController as display">
+<div class="col-xs-2" ng-repeat="picture in display.pictures">
+    <img src='/Picks/GetImage/{{picture.Id}}' />
+    <div>{{picture.Description}}</div>
+    <div>{{picture.PostedOn}}</div>
+    <div>{{picture.PostedBy}}</div>
+</div>
+    <div class="col-xs-12"></div>
+    </div>

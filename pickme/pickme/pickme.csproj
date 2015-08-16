@@ -198,12 +198,14 @@
     <Content Include="App_Data\Database1_log.ldf">
       <DependentUpon>Database1.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\app.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\pictureme.pubxml" />
@@ -256,7 +258,8 @@
     <Content Include="Views\Picks\Edit.cshtml" />
     <Content Include="Views\Picks\PickList.cshtml" />
     <Content Include="Views\Shared\_MainPage.cshtml" />
-    <Content Include="Views\Picks\_MainPage.cshtml" />
+    <Content Include="Views\Picks\MainPage.cshtml" />
+    <Content Include="Views\Picks\Main1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508132024088_initial.resx">
