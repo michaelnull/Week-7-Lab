@@ -21,14 +21,27 @@
 </section>
 <section ng-controller="CreateController as create">
     <button>Click to add another</button>
-    <!--create file upload form-->
-    <div>
-        <input type="file" name="File" id="File" />
-    </div>
-
-    <!--create add description-->
+        <form>
+        <!--create file upload form-->
+        <div>
+            <input type="file" name="File" id="File" />
+        </div>
+        <!--create add description-->
+        <div>
+            <label>Add a description
+            <input type="text" name="Description" id="Description" ng-model="create.Description"/>
+            </label>
+        </div>
     <!--create enter url-->
-
+            <div>
+                <label>
+                    Add a URL to link to
+                    <input type="url" name="Url" id="Url" ng-model="create.Url" />
+                </label>
+            </div>
+    </form>
+    <p>{{create.Description}}</p>
+    <p>{{create.Url}}</p>
 </section>
 
 </>
