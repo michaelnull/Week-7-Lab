@@ -14,10 +14,8 @@
                display.pictures = data;
            });
        };
-
-      
-
-
+    }]);
+    app.controller('CreateController', ['$http', function ($http) {
 
     }]);
    

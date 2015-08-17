@@ -256,7 +256,6 @@
     <Content Include="Views\Picks\Delete.cshtml" />
     <Content Include="Views\Picks\Details.cshtml" />
     <Content Include="Views\Picks\Edit.cshtml" />
-    <Content Include="Views\Picks\PickList.cshtml" />
     <Content Include="Views\Shared\_MainPage.cshtml" />
     <Content Include="Views\Picks\Main1.cshtml" />
   </ItemGroup>

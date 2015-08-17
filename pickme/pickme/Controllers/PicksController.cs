@@ -15,20 +15,7 @@ namespace pickme.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Picks
-        [Authorize]
-        public ActionResult PickList(int? id)
-        {
-            if (id == null || id < 1)
-            {
-                id = 1;
-            }
-            int picksToSkip = Convert.ToInt32(id - 1) * 12;
-
-            ViewBag.Page = id;
-            db.Picks.Include(x => x.PostedBy);
-            return View(db.Picks.ToList().Skip(picksToSkip).Take(12).OrderByDescending(x => x.PostedOn));
-        }
+        
         //move data about pictures into app.js for display on main webpage
         [Authorize]
         public ActionResult DisplayPicks(int? page)
@@ -38,8 +25,7 @@ namespace pickme.Controllers
                 page = 1;
             }
             int picksToSkip = Convert.ToInt32(page - 1) * 12;
-            
-            ViewBag.Page = page;
+
             var query = from p in db.Picks
                         orderby p.PostedOn descending
                         select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
@@ -76,40 +62,64 @@ namespace pickme.Controllers
         // POST: Picks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(PickUploadVM newPick)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create(PickUploadVM newPick)
+        //{
+        //    ApplicationUser currentUser = new ApplicationUser();
+        //    if (User.Identity.Name == "")
+        //    {
+        //        currentUser = db.Users.FirstOrDefault(x => x.UserName == newPick.YourName);
+        //    }
+        //    else
+        //    {
+        //        currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+        //    }
+
+        //    using (var ms = new MemoryStream())
+        //    {
+        //        newPick.File.InputStream.CopyTo(ms);
+
+        //        var pi = new Pick
+        //        {
+        //            PostedBy = currentUser,
+        //            Image = Pick.ScaleImage(ms.ToArray(), 50, 50),
+        //            PostedOn = DateTime.Now,
+        //            Description = newPick.Description,
+        //            PictureUrl = newPick.Url
+        //        };
+
+        //        db.Picks.Add(pi);
+        //        db.SaveChanges();
+        //    }
+        //    return RedirectToAction("PickList");
+
+        //add pick to db from angular
+        [Authorize]
+        public ActionResult Create(PickUploadVM pick)
         {
-            ApplicationUser currentUser = new ApplicationUser();
-            if (User.Identity.Name == "")
-            {
-                currentUser = db.Users.FirstOrDefault(x => x.UserName == newPick.YourName);
-            }
-            else
-            {
-                currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-            }
+            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
 
             using (var ms = new MemoryStream())
             {
-                newPick.File.InputStream.CopyTo(ms);
+                pick.File.InputStream.CopyTo(ms);
 
                 var pi = new Pick
                 {
                     PostedBy = currentUser,
-                    Image = Pick.ScaleImage(ms.ToArray(), 50, 50),
+                    Image = Pick.ScaleImage(ms.ToArray(), 100, 100),
                     PostedOn = DateTime.Now,
-                    Description = newPick.Description,
-                    PictureUrl = newPick.Url
+                    Description = pick.Description,
+                    PictureUrl = pick.Url
                 };
-
                 db.Picks.Add(pi);
-                db.SaveChanges();
             }
-            return RedirectToAction("PickList");
-
-
+            
+            db.SaveChanges();
+            return RedirectToAction("DisplayPicks");
         }
+        
+
         // GET: Picks/Edit/5
         [Authorize]
         public ActionResult Edit(int? id)
