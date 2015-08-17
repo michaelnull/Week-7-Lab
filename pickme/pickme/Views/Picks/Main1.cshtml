@@ -21,28 +21,38 @@
 </section>
 <section ng-controller="CreateController as create">
     <button>Click to add another</button>
-        <form>
-        <!--create file upload form-->
-        <div>
-            <input type="file" name="File" id="File" />
-        </div>
-        <!--create add description-->
-        <div>
-            <label>Add a description
-            <input type="text" name="Description" id="Description" ng-model="create.Description"/>
-            </label>
-        </div>
-    <!--create enter url-->
-            <div>
-                <label>
-                    Add a URL to link to
-                    <input type="url" name="Url" id="Url" ng-model="create.Url" />
-                </label>
+    <form ng-submit='add(pick)' enctype="multipart/form-data" method="post">
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Description">Description</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" id="Description" name="Description" type="text" value="" ng-model="pick.description" />
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Url">Url</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line" id="Url" name="Url" type="text" value="" ng-model="pick.url" />
+                    <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="file" name="File" id="File" ng-model="pick.file"/>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
     </form>
-    <p>{{create.Description}}</p>
-    <p>{{create.Url}}</p>
+    <p>{{pick.description}}</p>
+    <p>{{pick.url}}</p>
+    <p>{{create.works}}</p>
 </section>
 
-</>
-   
+

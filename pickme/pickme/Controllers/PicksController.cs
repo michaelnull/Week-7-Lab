@@ -53,11 +53,11 @@ namespace pickme.Controllers
         }
 
         // GET: Picks/Create
-        [Authorize]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //[Authorize]
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: Picks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -95,30 +95,54 @@ namespace pickme.Controllers
         //    return RedirectToAction("PickList");
 
         //add pick to db from angular
-        [Authorize]
+        //[Authorize]
         public ActionResult Create(PickUploadVM pick)
         {
             ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-
-            using (var ms = new MemoryStream())
+            if (pick.File != null)
             {
-                pick.File.InputStream.CopyTo(ms);
+                using (var ms = new MemoryStream())
+                {
+                    pick.File.InputStream.CopyTo(ms);
 
-                var pi = new Pick
+                    Pick pi = new Pick
+                    {
+                        PostedBy = currentUser,
+                        Image = Pick.ScaleImage(ms.ToArray(), 100, 100),
+                        PostedOn = DateTime.Now,
+                        Description = pick.Description,
+                        PictureUrl = pick.Url
+                    };
+                    db.Picks.Add(pi);
+                }
+            }
+           else
+            {
+
+                Pick pi = new Pick
                 {
                     PostedBy = currentUser,
-                    Image = Pick.ScaleImage(ms.ToArray(), 100, 100),
-                    PostedOn = DateTime.Now,
+                    PostedOn = DateTime.Today,
                     Description = pick.Description,
-                    PictureUrl = pick.Url
+                    PictureUrl = pick.Url,
                 };
+                pi.Image = pi.GetBytes(pi.PictureUrl);
                 db.Picks.Add(pi);
             }
-            
+
             db.SaveChanges();
-            return RedirectToAction("DisplayPicks");
+
+            var myPicks = from p in db.Picks.ToList()
+                          where p.PostedBy == currentUser
+                          orderby p.PostedOn descending
+                          select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
+
+            var myLastPick = myPicks.FirstOrDefault();
+
+
+            return Json(myLastPick, JsonRequestBehavior.AllowGet);
         }
-        
+
 
         // GET: Picks/Edit/5
         [Authorize]
