@@ -10,7 +10,7 @@
        });
        this.goto = function (whither) {
            this.page = whither;
-           $http.get('/picks/displaypicks/'+this.page).success(function (data) {
+           $http.get('/picks/displaypicks/'+ this.page).success(function (data) {
                display.pictures = data;
            });
        };

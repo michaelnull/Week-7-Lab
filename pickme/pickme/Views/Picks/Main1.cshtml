@@ -4,8 +4,8 @@
 
 <h2>Pick Me!</h2>
 <section ng-controller="DisplayController as display" ng-init="display.page = 1">
-   
-     <div class="col-xs-2" ng-repeat="picture in display.pictures">
+
+    <div class="col-xs-2" ng-repeat="picture in display.pictures">
         <img src='/Picks/GetImage/{{picture.Id}}' />
         <div>{{picture.Description}}</div>
         <div>{{picture.PostedOn}}</div>
@@ -25,12 +25,11 @@
     <div>
         <input type="file" name="File" id="File" />
     </div>
+
     <!--create add description-->
-
-
     <!--create enter url-->
 
 </section>
-    
+
 </>
    

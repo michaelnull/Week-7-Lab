@@ -18,13 +18,13 @@ namespace pickme.Controllers
         
         //move data about pictures into app.js for display on main webpage
         [Authorize]
-        public ActionResult DisplayPicks(int? page)
+        public ActionResult DisplayPicks(int? id)
         {
-            if (page == null || page < 1)
+            if (id == null || id < 1)
             {
-                page = 1;
+                id = 1;
             }
-            int picksToSkip = Convert.ToInt32(page - 1) * 12;
+            int picksToSkip = Convert.ToInt32(id - 1) * 12;
 
             var query = from p in db.Picks
                         orderby p.PostedOn descending
