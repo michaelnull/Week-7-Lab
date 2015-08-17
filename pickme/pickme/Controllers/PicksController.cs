@@ -38,10 +38,14 @@ namespace pickme.Controllers
                 page = 1;
             }
             int picksToSkip = Convert.ToInt32(page - 1) * 12;
-
+            
             ViewBag.Page = page;
+            var query = from p in db.Picks
+                        orderby p.PostedOn descending
+                        select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
+                        
 
-            return Json(db.Picks.ToList().Skip(picksToSkip).Take(12).OrderByDescending(x => x.PostedOn),
+            return Json(query.ToList().Skip(picksToSkip).Take(12),
                 JsonRequestBehavior.AllowGet);
 
         }
