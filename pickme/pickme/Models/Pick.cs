@@ -56,7 +56,7 @@ namespace pickme.Models
         {
             var client = new WebClient();
             var imageArray = client.DownloadData(url);
-            return ScaleImage(imageArray, 100, 100);
+            return ScaleImage(imageArray, 150, 150);
         }
        
 

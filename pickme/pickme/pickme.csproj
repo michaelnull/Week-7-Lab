@@ -252,12 +252,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Picks\Create.cshtml" />
-    <Content Include="Views\Picks\Delete.cshtml" />
-    <Content Include="Views\Picks\Details.cshtml" />
-    <Content Include="Views\Picks\Edit.cshtml" />
     <Content Include="Views\Shared\_MainPage.cshtml" />
-    <Content Include="Views\Picks\Main1.cshtml" />
+    <Content Include="Views\Picks\Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508132024088_initial.resx">

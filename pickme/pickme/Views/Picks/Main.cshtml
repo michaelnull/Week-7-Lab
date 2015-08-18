@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Main1";
+}
+
+<h2>Pick Me!</h2>
+
+<section ng-controller="DisplayController as display" ng-init="display.page = 1">
+
+    <div class="col-xs-2" ng-repeat="picture in display.pictures">
+        <img src='/Picks/GetImage/{{picture.Id}}' />
+        <div>{{picture.Description}}</div>
+        <div>{{picture.PostedOn}}</div>
+        <div>{{picture.PostedBy}}</div>
+    </div>
+    <div class="pagebar btn-group" role="group" aria-label="...">
+        <button ng-hide="display.page === 1" type="button" class="btn btn-default"><a href ng-click='display.goto(display.page - 1)'>go to page {{display.page - 1}}</a></button>
+        <button type="button" class="btn btn-default">this is page {{display.page}}</button>
+        <button type="button" class="btn btn-default"><a href ng-click='display.goto(display.page + 1)'>go to page {{display.page + 1}}</a></button>
+
+    </div>
+
+</section>
+<section ng-controller="CreateController as create">
+    <div class="modal fade" id="createModal">
+        <div class="modal-dialog">
+            <form ng-submit='add(pick)' enctype="multipart/form-data" method="post">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Description">Description</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="Description" name="Description" type="text" value="" ng-model="pick.description" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Url">Url</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="Url" name="Url" type="text" value="pick.url" ng-model="pick.url" />
+                                <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="file" name="File" id="File" ng-model="pick.file" />
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" class="btn btn-default" />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </form>
+
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+
+          
+          
+
+          
+          
+          
+          
+          
+          
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <button data-toggle="modal" data-target="#createModal">Click to add another</button>
+  
+    <p>{{pick.description}}</p>
+    <p>{{pick.url}}</p>
+    <p>{{create.works}}</p>
+</section>
+
+
+

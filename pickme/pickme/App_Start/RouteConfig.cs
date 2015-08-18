@@ -18,7 +18,7 @@ namespace pickme
             routes.MapRoute(
                name: "Default",
                url: "{controller}/{action}/{id}",
-               defaults: new { controller = "Picks", action = "Main1", id = UrlParameter.Optional }
+               defaults: new { controller = "Picks", action = "Main", id = UrlParameter.Optional }
            );
         }
 

@@ -108,7 +108,7 @@ namespace pickme.Controllers
                     Pick pi = new Pick
                     {
                         PostedBy = currentUser,
-                        Image = Pick.ScaleImage(ms.ToArray(), 100, 100),
+                        Image = Pick.ScaleImage(ms.ToArray(), 150, 150),
                         PostedOn = DateTime.Now,
                         Description = pick.Description,
                         PictureUrl = pick.Url
@@ -239,9 +239,9 @@ namespace pickme.Controllers
             return File(dbRow.Image, "image");
 
         }
-        public ActionResult Main1()
+        public ActionResult Main()
         {
-            return View("Main1");
+            return View("Main");
         }
         protected override void Dispose(bool disposing)
         {
