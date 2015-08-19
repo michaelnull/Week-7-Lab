@@ -16,7 +16,7 @@
         };
     }]);
     app.controller('CreateController', ['$http',function ( $http) {
-
+        this.pick = [{}];
         this.works = "awaiting data";
 
         $scope.add = function (pick) {

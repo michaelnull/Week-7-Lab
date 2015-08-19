@@ -23,86 +23,48 @@
 <section ng-controller="CreateController as create">
     <div class="modal fade" id="createModal">
         <div class="modal-dialog">
-            <form ng-submit='add(pick)' enctype="multipart/form-data" method="post">
+            <form ng-submit='add(pick)' enctype="multipart/form-data" method="post" ng-model="create.pick">
 
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Modal title</h4>
+                        <h4 class="modal-title">Add New!</h4>
                     </div>
                     <div class="modal-body">
 
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="Description">Description</label>
+                            <label class="control-label col-md-2" >Description</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" id="Description" name="Description" type="text" value="" ng-model="pick.description" />
+                                <input class="form-control text-box single-line" type="text"  ng-model="create.pick.description" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-2" for="Url">Url</label>
+                            <label class="control-label col-md-2">Url</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" id="Url" name="Url" type="text" value="pick.url" ng-model="pick.url" />
+                                <input class="form-control text-box single-line"  type="text" name="pick.url" ng-model="create.pick.url" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div>
-                                <input type="file" name="File" id="File" ng-model="pick.file" />
-
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" class="btn btn-default" />
+                                <input type="file"  ng-model="create.pick.file" />
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-
+                        <input type="submit" class="button-primary"/>
+                       <span>description = {{create.pick.description}}</span>
+                        <p>{{create.pick.url}}</p>
                     </div>
-
                 </div><!-- /.modal-content -->
             </form>
-
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-
-          
-          
-
-          
-          
-          
-          
-          
-          
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <button data-toggle="modal" data-target="#createModal">Click to add another</button>
-  
-    <p>{{pick.description}}</p>
-    <p>{{pick.url}}</p>
     <p>{{create.works}}</p>
+    <button data-toggle="modal" data-target="#createModal">Click to add another</button>
 </section>
 
 
