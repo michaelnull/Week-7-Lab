@@ -23,48 +23,40 @@
 <section ng-controller="CreateController as create">
     <div class="modal fade" id="createModal">
         <div class="modal-dialog">
-            <form ng-submit='add(pick)' enctype="multipart/form-data" method="post" ng-model="create.pick">
-
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Add New!</h4>
-                    </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New!</h4>
+                </div>
+                    <form  ng-submit='display.add(pick)' name="addpickform" id="createform">
                     <div class="modal-body">
-
                         <div class="form-group">
-                            <label class="control-label col-md-2" >Description</label>
+                            <label class="control-label col-md-2">Description</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line" type="text"  ng-model="create.pick.description" />
+                                <input class="form-control text-box single-line" type="text" ng-model="pick.description" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">Url</label>
                             <div class="col-md-10">
-                                <input class="form-control text-box single-line"  type="text" name="pick.url" ng-model="create.pick.url" />
+                                <input class="form-control text-box single-line" type="text" ng-model="pick.url" />
                                 <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="file"  ng-model="create.pick.file" />
-                            </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="button-primary"/>
-                       <span>description = {{create.pick.description}}</span>
-                        <p>{{create.pick.url}}</p>
+                        <input type="submit" class="btn btn-primary"/>
+                       <span>description = {{pick.description}}</span>
+                        <p>{{pick.url}}</p>
                     </div>
-                </div><!-- /.modal-content -->
-            </form>
+                </form>
+            </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <p>{{create.works}}</p>
-    <button data-toggle="modal" data-target="#createModal">Click to add another</button>
+    <p>{{display.works}}</p>
+    <button data-toggle="modal" data-target="#createModal" class="btn btn-primary">Click to add another</button>
 </section>
 
 

@@ -36,22 +36,7 @@ namespace pickme.Controllers
 
         }
 
-        // GET: Picks/Details/5
-        [Authorize]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pick pick = db.Picks.Find(id);
-            if (pick == null)
-            {
-                return HttpNotFound();
-            }
-            return View(pick);
-        }
-
+      
         // GET: Picks/Create
         //[Authorize]
         //public ActionResult Create()
@@ -144,87 +129,87 @@ namespace pickme.Controllers
         }
 
 
-        // GET: Picks/Edit/5
-        [Authorize]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pick pick = db.Picks.Find(id);
-            if (pick == null)
-            {
-                return HttpNotFound();
-            }
 
-            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
 
-            if (currentUser != pick.PostedBy)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EditVM changePick = new EditVM();
-            changePick.Id = pick.Id;
-            changePick.Description = pick.Description;
-            changePick.Url = pick.PictureUrl;
-            
-            return View(changePick);
-        }
 
-        // POST: Picks/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditVM changePick)
-        {
-            Pick pick = db.Picks.FirstOrDefault(x => x.Id == changePick.Id);
-            pick.Description = changePick.Description;
-            pick.PictureUrl = changePick.Url;
-            if (ModelState.IsValid)
-            {
-                
-                db.Entry(pick).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(changePick);
-        }
 
-        // GET: Picks/Delete/5
-        [Authorize]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Pick pick = db.Picks.Find(id);
-            if (pick == null)
-            {
-                return HttpNotFound();
-            }
 
-            ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
 
-            if (currentUser != pick.PostedBy)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            return View(pick);
-        }
 
-        // POST: Picks/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Pick pick = db.Picks.Find(id);
-            db.Picks.Remove(pick);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                         
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+
+     
+
+     
+     
+     
+     
+     
+     
+                                                                                                                                   
+
+
+
+
+
+
+
+
+
+                                                                      
 
         public ActionResult GetImage(int id)
         {

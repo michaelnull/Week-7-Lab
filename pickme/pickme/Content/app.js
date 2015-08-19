@@ -14,29 +14,41 @@
                 display.pictures = data;
             });
         };
-    }]);
-    app.controller('CreateController', ['$http',function ( $http) {
-        this.pick = [{}];
+
         this.works = "awaiting data";
 
-        $scope.add = function (pick) {
-            console.log(pick);
-
-            $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url }).
-      then(function (response) {
-          // this callback will be called asynchronously
-          // when the response is available
-          display.pictures.unshift(response);
-          display.goto(display.page);
-          this.works = response + "success";
-      },
-      function (response) {
-          this.works = response + "failure";
-      }
-      );
+        this.add = function (pick) {
+            this.works = " create function called successfully";
+            $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url });
+            this.works = "postes";
+            this.page(1);
         };
-
-
     }]);
+    //app.controller('CreateController' , ['$http' , function($http){
+        
+       
+    //}]);
+    ////app.controller('CreateController', ['$http',function ( $http) {
+       
+
+    //    this.add = function (pick) {
+    //        console.log(pick);
+
+    //      $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url }).
+    //      then(function (response) {
+    //      // this callback will be called asynchronously
+    //      // when the response is available
+    //      display.pictures.unshift(response);
+    //      display.goto(display.page);
+    //      this.works = response + "success";
+    //      },
+    //      function (response) {
+    //      this.works = response + "failure";
+    //      }
+    //       );
+    //    };
+
+
+    //}]);
 
 })();
