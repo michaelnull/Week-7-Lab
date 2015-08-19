@@ -1,17 +1,28 @@
 ﻿@{
-    ViewBag.Title = "Main1";
+    ViewBag.Title = "Pick Me!";
 }
 
 <h2>Pick Me!</h2>
 
 <section ng-controller="DisplayController as display" ng-init="display.page = 1">
-
-    <div class="col-xs-2" ng-repeat="picture in display.pictures">
-        <img src='/Picks/GetImage/{{picture.Id}}' />
-        <div>{{picture.Description}}</div>
-        <div>{{picture.PostedOn}}</div>
-        <div>{{picture.PostedBy}}</div>
+    <div class="col-xs-12 picturerow container">
+        <dr class="col-xs-2" ng-repeat="picture in display.row1">
+            <img src='/Picks/GetImage/{{picture.Id}}' />
+            <p>{{picture.Description}}</p>
+            <p>{{picture.PostedOn}}</p>
+            <p>{{picture.PostedBy}}</p>
+        </dr>
     </div>
+    <div class="col-xs-12 picturerow container">
+        <dr class="col-xs-2" ng-repeat="picture in display.row2">
+            <img src='/Picks/GetImage/{{picture.Id}}' />
+            <p>{{picture.Description}}</p>
+            <p>{{picture.PostedOn}}</p>
+            <p>{{picture.PostedBy}}</p>
+        </dr>
+    </div>
+        
+    
     <div class="pagebar btn-group" role="group" aria-label="...">
         <button ng-hide="display.page === 1" type="button" class="btn btn-default"><a href ng-click='display.goto(display.page - 1)'>go to page {{display.page - 1}}</a></button>
         <button type="button" class="btn btn-default">this is page {{display.page}}</button>

@@ -107,7 +107,7 @@ namespace pickme.Controllers
                 Pick pi = new Pick
                 {
                     PostedBy = currentUser,
-                    PostedOn = DateTime.Today,
+                    PostedOn = DateTime.Now,
                     Description = pick.Description,
                     PictureUrl = pick.Url,
                 };

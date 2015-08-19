@@ -52,6 +52,11 @@ namespace pickme.Models
             bmp.Save(ms, ImageFormat.Jpeg);
             return ms.ToArray();
         }
+       /// <summary>
+       /// 
+       /// </summary>
+       /// <param name="url"></param>
+       /// <returns> a byte array reprresenting an image</returns>
         public byte[] GetBytes(string url)
         {
             var client = new WebClient();
@@ -59,7 +64,6 @@ namespace pickme.Models
             return ScaleImage(imageArray, 150, 150);
         }
        
-
 
     }
 
