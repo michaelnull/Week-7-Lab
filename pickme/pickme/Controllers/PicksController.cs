@@ -122,10 +122,10 @@ namespace pickme.Controllers
                           orderby p.PostedOn descending
                           select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
 
-            var myLastPick = myPicks.FirstOrDefault();
+            var response = myPicks.FirstOrDefault();
 
 
-            return Json(myLastPick, JsonRequestBehavior.AllowGet);
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
 

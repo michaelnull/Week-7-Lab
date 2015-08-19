@@ -8,6 +8,7 @@
         $http.get('/picks/displaypicks/1').success(function (data) {
             display.pictures = data;
         });
+
         this.goto = function (whither) {
             this.page = whither;
             $http.get('/picks/displaypicks/' + this.page).success(function (data) {
@@ -15,19 +16,22 @@
             });
         };
 
-        this.works = "awaiting data";
-
         this.add = function (pick) {
-            this.works = " create function called successfully";
-            $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url });
-            this.works = "postes";
-            this.page(1);
+            display.works = " create function called successfully";
+            display.goto(1);
+
+            $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url })
+          
+
         };
+        
     }]);
-    //app.controller('CreateController' , ['$http' , function($http){
+    app.controller('CreateController' , ['$http' , function($http){
         
        
-    //}]);
+
+       
+    }]);
     ////app.controller('CreateController', ['$http',function ( $http) {
        
 
