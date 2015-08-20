@@ -15,7 +15,7 @@ namespace pickme.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        
+
         //move data about pictures into app.js for display on main webpage
         [Authorize]
         public ActionResult DisplayPicks(int? id)
@@ -29,187 +29,49 @@ namespace pickme.Controllers
             var query = from p in db.Picks
                         orderby p.PostedOn descending
                         select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
-                        
+
 
             return Json(query.ToList().Skip(picksToSkip).Take(12),
                 JsonRequestBehavior.AllowGet);
 
         }
-
-      
-        // GET: Picks/Create
-        //[Authorize]
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        // POST: Picks/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create(PickUploadVM newPick)
-        //{
-        //    ApplicationUser currentUser = new ApplicationUser();
-        //    if (User.Identity.Name == "")
-        //    {
-        //        currentUser = db.Users.FirstOrDefault(x => x.UserName == newPick.YourName);
-        //    }
-        //    else
-        //    {
-        //        currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-        //    }
-
-        //    using (var ms = new MemoryStream())
-        //    {
-        //        newPick.File.InputStream.CopyTo(ms);
-
-        //        var pi = new Pick
-        //        {
-        //            PostedBy = currentUser,
-        //            Image = Pick.ScaleImage(ms.ToArray(), 50, 50),
-        //            PostedOn = DateTime.Now,
-        //            Description = newPick.Description,
-        //            PictureUrl = newPick.Url
-        //        };
-
-        //        db.Picks.Add(pi);
-        //        db.SaveChanges();
-        //    }
-        //    return RedirectToAction("PickList");
-
-        //add pick to db from angular
-        //[Authorize]
+        [Authorize]
         public ActionResult Create(PickUploadVM pick)
         {
             ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+            Pick pi = new Pick
+            {
+                PostedBy = currentUser,
+                PostedOn = DateTime.Now,
+                Description = pick.Description,
+                PictureUrl = pick.Url,
+            };
+
             if (pick.File != null)
             {
                 using (var ms = new MemoryStream())
                 {
                     pick.File.InputStream.CopyTo(ms);
-
-                    Pick pi = new Pick
-                    {
-                        PostedBy = currentUser,
-                        Image = Pick.ScaleImage(ms.ToArray(), 150, 150),
-                        PostedOn = DateTime.Now,
-                        Description = pick.Description,
-                        PictureUrl = pick.Url
-                    };
-                    db.Picks.Add(pi);
+                    pi.Image = Pick.ScaleImage(ms.ToArray(), 150, 150);
                 }
             }
-           else
+            else
             {
-
-                Pick pi = new Pick
-                {
-                    PostedBy = currentUser,
-                    PostedOn = DateTime.Now,
-                    Description = pick.Description,
-                    PictureUrl = pick.Url,
-                };
                 pi.Image = pi.GetBytes(pi.PictureUrl);
-                db.Picks.Add(pi);
             }
 
+
+            db.Picks.Add(pi);
             db.SaveChanges();
 
-            var myPicks = from p in db.Picks.ToList()
-                          where p.PostedBy == currentUser
-                          orderby p.PostedOn descending
-                          select new { Id = p.Id, Description = p.Description, PostedOn = p.PostedOn.ToString(), PostedBy = p.PostedBy.UserName };
 
-            var response = myPicks.FirstOrDefault();
+            var result = new { Id = pi.Id, Description = pi.Description, PostedOn = pi.PostedOn.ToString(), PostedBy = pi.PostedBy.UserName };
 
 
-            return Json(response, JsonRequestBehavior.AllowGet);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                                                         
-
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-
-     
-
-     
-     
-     
-     
-     
-     
-                                                                                                                                   
-
-
-
-
-
-
-
-
-
-                                                                      
 
         public ActionResult GetImage(int id)
         {
@@ -218,7 +80,7 @@ namespace pickme.Controllers
             if (dbRow.Image == null)
             {
                 Pick noImage = new Pick();
-                    noImage.Image = noImage.GetBytes("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTLna360D4lNuRMj_2nBHnO-vtIh9QhpDXJPnfadeaMQEPJbGNoLdSZ4A");
+                noImage.Image = noImage.GetBytes("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTLna360D4lNuRMj_2nBHnO-vtIh9QhpDXJPnfadeaMQEPJbGNoLdSZ4A");
                 return File(noImage.Image, "image");
             }
             return File(dbRow.Image, "image");
@@ -236,8 +98,8 @@ namespace pickme.Controllers
             }
             base.Dispose(disposing);
         }
-        
-        
+
+
 
     }
 }

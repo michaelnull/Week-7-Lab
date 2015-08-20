@@ -27,8 +27,20 @@ textarea {
    bottom: 0;
    right: 0;
    width: 100%;
-   border: 3px solid;
+   border:inset;
 }
-.picturerow{
-   height:300px;
+.picture{
+   width: 150px;
+   clear:both;
+   margin-top: 20px;
+   
+}
+.createform.ng-invalid{
+    background: red;
+}
+.addbutton{
+    margin-bottom: 10px;
+}
+.pick{
+    border:inset lightgray;
 }

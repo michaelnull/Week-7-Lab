@@ -2,28 +2,33 @@
     ViewBag.Title = "Pick Me!";
 }
 
-<h2>Pick Me!</h2>
+
 
 <section ng-controller="DisplayController as display" ng-init="display.page = 1">
-    <div class="col-xs-12 picturerow container">
-        <dr class="col-xs-2" ng-repeat="picture in display.row1">
-            <img src='/Picks/GetImage/{{picture.Id}}' />
-            <p>{{picture.Description}}</p>
-            <p>{{picture.PostedOn}}</p>
-            <p>{{picture.PostedBy}}</p>
-        </dr>
+    <h2>Pick Me!</h2>
+    <button data-toggle="modal" data-target="#createModal" class="btn btn-primary addbutton">Click to add another</button>
+    <br/>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2 pick" ng-repeat="picture in display.pictures.slice(0,6)">
+                <img class="picture" ng-src='/Picks/GetImage/{{picture.Id}}' />
+                <p>{{picture.Description}}</p>
+                <p>{{picture.PostedOn}}</p>
+                <p>{{picture.PostedBy}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2 pick" ng-repeat="picture in display.pictures.slice(6,12)">
+                <img class="picture" ng-src='/Picks/GetImage/{{picture.Id}}' />
+                <p>{{picture.Description}}</p>
+                <p>{{picture.PostedOn}}</p>
+                <p>{{picture.PostedBy}}</p>
+            </div>
+        </div>
+
     </div>
-    <div class="col-xs-12 picturerow container">
-        <dr class="col-xs-2" ng-repeat="picture in display.row2">
-            <img src='/Picks/GetImage/{{picture.Id}}' />
-            <p>{{picture.Description}}</p>
-            <p>{{picture.PostedOn}}</p>
-            <p>{{picture.PostedBy}}</p>
-        </dr>
-    </div>
-        
-    
     <div class="pagebar btn-group" role="group" aria-label="...">
+        <button ng-hide="display.page <= 2" type="button" class="btn btn-default"><a href ng-click='display.goto(1)'>go to page 1</a></button>
         <button ng-hide="display.page === 1" type="button" class="btn btn-default"><a href ng-click='display.goto(display.page - 1)'>go to page {{display.page - 1}}</a></button>
         <button type="button" class="btn btn-default">this is page {{display.page}}</button>
         <button type="button" class="btn btn-default"><a href ng-click='display.goto(display.page + 1)'>go to page {{display.page + 1}}</a></button>
@@ -37,35 +42,33 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Add New!</h4>
                 </div>
-                    <form  ng-submit='display.add(pick)' name="addpickform" id="createform">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Description</label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" type="text" ng-model="pick.description" />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                <div class="container">
+                    <form ng-submit='display.add(pick)' name="addpickform" class="createform form-horizontal">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Description</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="pick.description" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">Url</label>
+                                <div class="col-md-10">
+                                    <input class="form-control text-box single-line" type="text" ng-model="pick.url" />
+                                    <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-2">Url</label>
-                            <div class="col-md-10">
-                                <input class="form-control text-box single-line" type="text" ng-model="pick.url" />
-                                <span class="field-validation-valid text-danger" data-valmsg-for="Url" data-valmsg-replace="true"></span>
-                            </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" />
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary"/>
-                       <span>description = {{pick.description}}</span>
-                        <p>{{pick.url}}</p>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-    <p ng-init="display.works = 'awaiting data'">{{display.works}}</p>
-    <button data-toggle="modal" data-target="#createModal" class="btn btn-primary">Click to add another</button>
 </section>
 
 
