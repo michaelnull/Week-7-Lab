@@ -20,10 +20,13 @@
               
             $http.post('/picks/create', { File: pick.file, Description: pick.description, Url: pick.url })
                  .then(function (response) {
-                     console.log(response.data);
-                     console.log("HEELO THIS WORKED!");
-                     $('#createModal').modal('hide');
+
+                    
                      display.pictures.unshift(response.data);
+                     $("#createModal").modal('hide');
+                     pick.description = "";
+                     pick.url = "";
+                     display.addpickform.$setPristine();
 
                  });
             
